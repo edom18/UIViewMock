@@ -1,9 +1,9 @@
 
 @import UIKit;
 
-@interface MOCKView : UIView
+@interface VMMockView : UIView
 
-typedef void (^MOCKViewTouchHandlerBlock)();
+typedef void (^VMMockViewTouchHandlerBlock)();
 
 @property (nonatomic, assign) BOOL visibleTargets;
 
@@ -11,10 +11,10 @@ typedef void (^MOCKViewTouchHandlerBlock)();
 + (instancetype)createWithFrame:(CGRect)frame;
 
 - (void)addMockTarget:(CGRect)frame
-         touchHandler:(MOCKViewTouchHandlerBlock)handler;
+         touchHandler:(VMMockViewTouchHandlerBlock)handler;
 
 - (void)addImageMockTarget:(CGRect)frame
               withImageURL:(NSURL *)url
-              touchHandler:(MOCKViewTouchHandlerBlock)handler;
+              touchHandler:(VMMockViewTouchHandlerBlock)handler;
 
 @end

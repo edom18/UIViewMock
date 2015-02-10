@@ -1,16 +1,16 @@
 
-#import "MOCKView.h"
+#import "VMMockView.h"
 
 #import <objc/runtime.h>
 
-@interface MOCKView()
+@interface VMMockView()
 
 @property (nonatomic, strong) NSMutableArray *mockTargetList;
     
 @end
 
 
-@implementation MOCKView
+@implementation VMMockView
 
 @synthesize visibleTargets = _visibleTargets;
 
@@ -128,7 +128,7 @@
  *  @param handler tap callback.
  */
 - (void)addMockTarget:(CGRect)frame
-         touchHandler:(MOCKViewTouchHandlerBlock)handler
+         touchHandler:(VMMockViewTouchHandlerBlock)handler
 {
     UIView *mockTarget = [self makeMockTarget:frame];
     [self applyTapEvent:handler toView:mockTarget];
@@ -146,7 +146,7 @@
  */
 - (void)addImageMockTarget:(CGRect)frame
          withImageURL:(NSURL *)url
-         touchHandler:(MOCKViewTouchHandlerBlock)handler
+         touchHandler:(VMMockViewTouchHandlerBlock)handler
 {
     UIImageView *mockTarget = [[UIImageView alloc] initWithFrame:frame];
     mockTarget.userInteractionEnabled = YES;
@@ -173,7 +173,7 @@
  *  @param handler handler
  *  @param view    target view
  */
-- (void)applyTapEvent:(MOCKViewTouchHandlerBlock)handler
+- (void)applyTapEvent:(VMMockViewTouchHandlerBlock)handler
                toView:(UIView *)view
 {
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -189,7 +189,7 @@
 - (void)tapMock:(UITapGestureRecognizer *)sender
 {
     UIView *target = sender.view;
-    MOCKViewTouchHandlerBlock block = objc_getAssociatedObject(target, _cmd);
+    VMMockViewTouchHandlerBlock block = objc_getAssociatedObject(target, _cmd);
     if (block) {
         block();
     }
