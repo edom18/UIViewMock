@@ -15,6 +15,7 @@
 		5C4A55391A89B2F400EE7EFF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C4A55371A89B2F400EE7EFF /* LaunchScreen.xib */; };
 		5C4A55451A89B2F400EE7EFF /* MOCKSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A55441A89B2F400EE7EFF /* MOCKSampleTests.m */; };
 		5C4A55501A89B36100EE7EFF /* VMMockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A554F1A89B36100EE7EFF /* VMMockView.m */; };
+		5C7E0C0F1A8A141800BAA288 /* VMMockTouchItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7E0C0E1A8A141800BAA288 /* VMMockTouchItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,8 @@
 		5C4A55441A89B2F400EE7EFF /* MOCKSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MOCKSampleTests.m; sourceTree = "<group>"; };
 		5C4A554E1A89B36100EE7EFF /* VMMockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMMockView.h; sourceTree = "<group>"; };
 		5C4A554F1A89B36100EE7EFF /* VMMockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMMockView.m; sourceTree = "<group>"; };
+		5C7E0C0D1A8A141700BAA288 /* VMMockTouchItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMMockTouchItem.h; sourceTree = "<group>"; };
+		5C7E0C0E1A8A141800BAA288 /* VMMockTouchItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMMockTouchItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +97,8 @@
 				5C4A55281A89B2F400EE7EFF /* Supporting Files */,
 				5C4A554E1A89B36100EE7EFF /* VMMockView.h */,
 				5C4A554F1A89B36100EE7EFF /* VMMockView.m */,
+				5C7E0C0D1A8A141700BAA288 /* VMMockTouchItem.h */,
+				5C7E0C0E1A8A141800BAA288 /* VMMockTouchItem.m */,
 			);
 			path = MOCKSample;
 			sourceTree = "<group>";
@@ -226,6 +231,7 @@
 			files = (
 				5C4A55311A89B2F400EE7EFF /* ViewController.m in Sources */,
 				5C4A552E1A89B2F400EE7EFF /* AppDelegate.m in Sources */,
+				5C7E0C0F1A8A141800BAA288 /* VMMockTouchItem.m in Sources */,
 				5C4A55501A89B36100EE7EFF /* VMMockView.m in Sources */,
 				5C4A552B1A89B2F400EE7EFF /* main.m in Sources */,
 			);

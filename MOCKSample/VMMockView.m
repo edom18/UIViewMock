@@ -5,6 +5,7 @@
 
 @interface VMMockView()
 
+@property (nonatomic, strong) NSMutableArray *touchItemList;
 @property (nonatomic, strong) NSMutableArray *mockTargetList;
 @property (nonatomic, strong) NSCache *imageCache;
     
@@ -64,12 +65,12 @@
     _visibleTargets = visible;
     
     if (visible) {
-        for (UIView *view in self.subviews) {
+        for (UIView *view in self.mockTargetList) {
             view.backgroundColor = [self randomColor];
         }
     }
     else {
-        for (UIView *view in self.subviews) {
+        for (UIView *view in self.mockTargetList) {
             view.backgroundColor = UIColor.clearColor;
         }
     }
@@ -114,51 +115,25 @@
  *
  *  @return mock target as UIView
  */
-- (UIView *)makeMockTarget:(CGRect)frame
+- (UIView *)makeNormalMockTarget:(VMMockTouchItem *)item
 {
-    UIView *mockTarget = [[UIView alloc] initWithFrame:frame];
+    UIView *mockTarget = [[UIView alloc] initWithFrame:item.frame];
     if (self.visibleTargets) {
         mockTarget.backgroundColor = [self randomColor];
     }
+    [self applyTapEvent:item.handler toView:mockTarget];
     return mockTarget;
 }
-
-
-/**
- *  Add mock target
- *
- *  @param frame
- *  @param handler tap callback.
- */
-- (void)addMockTarget:(CGRect)frame
-         touchHandler:(VMMockViewTouchHandlerBlock)handler
+- (UIImageView *)makeImageMockTarget:(VMMockTouchItem *)item
 {
-    UIView *mockTarget = [self makeMockTarget:frame];
-    [self applyTapEvent:handler toView:mockTarget];
-    [self addSubview:mockTarget];
-    [self.mockTargetList addObject:mockTarget];
-}
-
-
-/**
- *  Add mock target with an image.
- *
- *  @param frame
- *  @param url     image url
- *  @param handler tap callback.
- */
-- (void)addImageMockTarget:(CGRect)frame
-         withImageURL:(NSURL *)url
-         touchHandler:(VMMockViewTouchHandlerBlock)handler
-{
-    UIImageView *mockTarget = [[UIImageView alloc] initWithFrame:frame];
+    UIImageView *mockTarget = [[UIImageView alloc] initWithFrame:item.frame];
     mockTarget.userInteractionEnabled = YES;
     mockTarget.backgroundColor = UIColor.lightGrayColor;
-    [self applyTapEvent:handler toView:mockTarget];
+    [self applyTapEvent:item.handler toView:mockTarget];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *key     = url.absoluteString;
+        NSString *key     = item.url.absoluteString;
         UIImage *cacheImg = [self.imageCache objectForKey:key];
-        UIImage *img      = cacheImg ?: [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+        UIImage *img      = cacheImg ?: [UIImage imageWithData:[NSData dataWithContentsOfURL:item.url]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (!img) {
@@ -171,8 +146,41 @@
         });
     });
     
-    [self addSubview:mockTarget];
-    [self.mockTargetList addObject:mockTarget];
+    return mockTarget;
+}
+
+
+/**
+ *  Add touch item
+ *
+ *  @param item VMMockTouchItem
+ */
+- (void)addTouchItem:(VMMockTouchItem *)item
+{
+    [self.touchItemList addObject:item];
+    
+    if (item.url) {
+        UIImageView *mockTarget = [self makeImageMockTarget:item];
+        [self addSubview:mockTarget];
+        [self.mockTargetList addObject:mockTarget];
+    }
+    else {
+        UIView *mockTarget = [self makeNormalMockTarget:item];
+        [self addSubview:mockTarget];
+        [self.mockTargetList addObject:mockTarget];
+    }
+}
+
+/**
+ *  Add touch items
+ */
+- (void)addTouchItems:(NSArray *)items
+{
+    for (VMMockTouchItem *item in items) {
+        if ([item isKindOfClass:VMMockTouchItem.class]) {
+            [self addTouchItem:item];
+        }
+    }
 }
 
 

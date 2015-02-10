@@ -1,6 +1,8 @@
 
 @import UIKit;
 
+#import "VMMockTouchItem.h"
+
 @interface VMMockView : UIView
 
 typedef void (^VMMockViewTouchHandlerBlock)();
@@ -10,11 +12,19 @@ typedef void (^VMMockViewTouchHandlerBlock)();
 + (instancetype)create;
 + (instancetype)createWithFrame:(CGRect)frame;
 
-- (void)addMockTarget:(CGRect)frame
-         touchHandler:(VMMockViewTouchHandlerBlock)handler;
+/**
+ *  Add touch item
+ *
+ *  @param item VMMockTouchItem
+ */
+- (void)addTouchItem:(VMMockTouchItem *)item;
 
-- (void)addImageMockTarget:(CGRect)frame
-              withImageURL:(NSURL *)url
-              touchHandler:(VMMockViewTouchHandlerBlock)handler;
+
+/**
+ *  Add touch items
+ *
+ *  @param items VMMockTouchItems
+ */
+- (void)addTouchItems:(NSArray *)items;
 
 @end
