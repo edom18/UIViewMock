@@ -6,6 +6,7 @@
 @interface VMMockView()
 
 @property (nonatomic, strong) NSMutableArray *mockTargetList;
+@property (nonatomic, strong) NSCache *imageCache;
     
 @end
 
@@ -31,6 +32,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.imageCache = [[NSCache alloc] init];
+        self.imageCache.countLimit = 20;
         [self setupTouchEvent];
     }
     return self;
@@ -153,10 +156,16 @@
     mockTarget.backgroundColor = UIColor.lightGrayColor;
     [self applyTapEvent:handler toView:mockTarget];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *imgData = [NSData dataWithContentsOfURL:url];
-        UIImage *img    = [UIImage imageWithData:imgData];
+        NSString *key     = url.absoluteString;
+        UIImage *cacheImg = [self.imageCache objectForKey:key];
+        UIImage *img      = cacheImg ?: [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            if (!img) {
+                return;
+            }
+            
+            [self.imageCache setObject:img forKey:key];
             mockTarget.image = img;
             mockTarget.backgroundColor = UIColor.clearColor;
         });

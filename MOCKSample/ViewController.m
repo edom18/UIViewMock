@@ -29,6 +29,14 @@
                     touchHandler:^{
                         NSLog(@"image mock!!");
                     }];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [mockView addImageMockTarget:CGRectMake(100, 338, 244, 120)
+                        withImageURL:[NSURL URLWithString:@"https://878afc88c41ea4f638275872f0a796f86144cf47.googledrive.com/host/0BzgQC1agpgIDfi13eTJVeUUtU3I4X2JKSHE2Y3lwS2FhazFTZVZ3bmJxSHpYQVc3SEFaVEU/dummy_game_list.png"]
+                        touchHandler:^{
+                            NSLog(@"image mock!!");
+                        }];
+    });
     [self.view addSubview:mockView];
 }
 
